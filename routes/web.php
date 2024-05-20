@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,14 +16,13 @@ use App\Http\Controllers\WelcomeController;
 */
 
 /*
-Route::get('/', function () {
-    return view('welcome');
-});
-*/
-
-/*
 Route::get('/',[\App\Http\Controllers\WelcomeController::class, 'index']);
 */
 
+//タスク管理システム
 Route::get('/welcome',[WelcomeController::class, 'index']);
+
+
+//テスト用
 Route::get('/welcome/second',[WelcomeController::class, 'second']);
+Route::get('/',[AuthController::class, 'index']);
