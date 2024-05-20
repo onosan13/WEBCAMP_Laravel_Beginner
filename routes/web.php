@@ -24,5 +24,5 @@ Route::get('/', function () {
 Route::get('/',[\App\Http\Controllers\WelcomeController::class, 'index']);
 */
 
-Route::get('/',[WelcomeController::class, 'index']);
+Route::get('/welcome',[WelcomeController::class, 'index']);
 Route::get('/welcome/second',[WelcomeController::class, 'second']);
