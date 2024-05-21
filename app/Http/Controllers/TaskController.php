@@ -2,18 +2,18 @@
 declare(strict_types=1);
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
     /**
      * タスク一覧を表示する
-     * 
+     *
      * @return \Illuminate\View\View
      */
      public function list()
      {
          return view('task.list');
      }
-     
+
 }

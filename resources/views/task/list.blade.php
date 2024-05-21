@@ -14,7 +14,7 @@
                     <label for=""><input type="radio" name="priority" checked>普通</label>
                     <label for=""><input type="radio" name="priority" checked>高い</label>
             </form>
-            
+
             <h1>タスクの一覧(未実装)</h1>
             <a href="./top.html">CSVダウンロード(未実装)</a><br>
             <table border="1">
@@ -64,6 +64,6 @@
             <br>
             <hr>
             <menu label="リンク">
-            <a href="./index.html">ログアウト(未実装)</a><br>
+            <a href="/logout">ログアウト</a><br>
             </menu>
 @endsection

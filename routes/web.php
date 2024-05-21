@@ -23,14 +23,18 @@ Route::get('/',[\App\Http\Controllers\WelcomeController::class, 'index']);
 */
 
 //タスク管理システム
-Route::get('/welcome',[WelcomeController::class, 'index']);
-Route::post('/login',[AuthController::class, 'login']);
-Route::get('/task/list',[TaskController::class, 'list']);
+Route::get('/',[AuthController::class, 'index'])->name('front.index');
+Route::post('/login', [AuthController::class, 'login']);
 
+//認可処理
+Route::middleware(['auth'])->group(function(){
+    Route::get('/task/list', [TaskController::class, 'list']);
+    Route::get('/logout', [AuthController::class, 'logout']);
+});
 
 //テスト用
+Route::get('/welcome',[WelcomeController::class, 'index']);
 Route::get('/welcome/second',[WelcomeController::class, 'second']);
-Route::get('/',[AuthController::class, 'index']);
 //formテスト用
 Route::get('/test', [TestController::class, 'index']);
 Route::post('/test/input',[TestController::class, 'input']);
