@@ -63,4 +63,12 @@ class TaskController extends Controller
         //
         return redirect('/task/list');
     }
+
+    /**
+     * タスクの詳細閲覧
+     */
+    public function detail($task_id)
+    {
+        var_dump($task_id); exit;
+    }
 }
