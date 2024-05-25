@@ -18,6 +18,7 @@
             @endif
             <form action="/task/register" method="post">
                 @csrf
+                @method("PUT")
                 タスク名:<input name="name" value="{{old('name')}}"><br>
                 期限:<input name="period" type="date" value="{{(old('period'))}}"><br>
                 タスク詳細:<textarea name="detail">{{old('detail')}}</textarea><br>
@@ -40,8 +41,8 @@
                     <td>{{ $task->name }}</td>
                     <td>{{ $task->period }}</td>
                     <td>{{ $task->getPriorityString() }}</td>
-                    <td><a href="./detail.html">詳細閲覧</a></td>
-                    <td><a href="./edit.html">編集</a></td>
+                    <td><a href="{{ route('detail', ['task_id' => $task->id]) }}">詳細閲覧</a>
+                    <td><a href="{{ route('edit', ['task_id' => $task->id]) }}">編集</a></td>
                     <td><form action="./top.html"><button>完了</button></form>
                 </tr>
                 @endforeach
@@ -69,6 +70,7 @@
             <br>
             <hr>
             <menu label="リンク">
+            <a href="/task/list">タスク一覧</a><br>
             <a href="/logout">ログアウト</a><br>
             </menu>
 @endsection
