@@ -21,10 +21,7 @@ class TaskController extends Controller
          //1Page辺りの表示アイテム数を設定
          $per_page = 2;
          //一覧の取得
-         $list=TaskModel::where('user_id',Auth::id())
-            ->orderBy('priority','DESC')
-            ->orderBy('period')
-            ->orderBy('created_at')
+         $list=$this->getListBuilder()
             ->paginate($per_page);
             //->get();
          /*$sql=TaskModel::where('user_id',Auth::id())
@@ -172,6 +169,57 @@ class TaskController extends Controller
     }
 
     /**
+     * CSVダウンロード
+     */
+    public function csvDownload()
+    {
+        $data_list = [
+            'id' => 'タスクID',
+            'name' => 'タスク名',
+            'priority' => '重要度',
+            'period' => '期限',
+            'detail' => 'タスク詳細',
+            'created_at' => 'タスク作成日',
+            'updated_at' => 'タスク修正日',
+        ];
+        //「ダウンロードさせたいCSV」を作成する
+        //データを取得する
+        $list=$this->getListBuilder()->get();
+        //バッファリングを開始
+        ob_start();
+
+        //「書き込み先を"出力"にした」ファイルハンドルを作成する
+        $file = new \splfileObject('php://output', 'w');
+        // ヘッダを書き込む
+        $file->fputcsv(array_values($data_list));
+        //CSVをファイルに書き込む(出力する)
+        foreach($list as $datum){
+            $awk=[]; //作業領域の確保
+            //$data_listに書いてある順番に、書いてある要素だけを$awkに格納する
+            foreach($data_list as $k => $v){
+                if($k === 'priority'){
+                    $awk[]=$datum->getPriorityString();
+                }
+                $awk[]=$datum->$k;
+            }
+            //CSVの1行を出力
+            $file->fputcsv($awk);
+        }
+
+        //現在のバッファの中身を取得し、出力バッファを削除する
+        $csv_string=ob_get_clean();
+
+        //文字コードを変換する
+        $csv_string_sjis=mb_convert_encoding($csv_string, 'SJIS', 'UTF-8');
+        //ダウンロードファイル名の作成
+        $download_filename='task_list' . date('ymd') . '.csv';
+        //CSVを出力する
+        return response($csv_string_sjis)
+            ->header('Content-Type', 'text/csv')
+            ->header('Content-Disposition', 'attachment; filename="'. $download_filename .'"');
+    }
+
+    /**
      * 「単一のタスク」Modelの取得
      */
     protected function getTaskModel($task_id)
@@ -202,5 +250,16 @@ class TaskController extends Controller
         // テンプレートに「取得したレコード」の情報を渡す
         return view($template_name, ['task'=>$task]);
      }
+
+    /**
+     * 一覧用の Illuminate\Database\Eloquent\Builder インスタンスの取得
+     */
+    protected function getListBuilder()
+    {
+        return TaskModel::where('user_id',Auth::id())
+            ->orderBy('priority','DESC')
+            ->orderBy('period')
+            ->orderBy('created_at');
+    }
 
 }
