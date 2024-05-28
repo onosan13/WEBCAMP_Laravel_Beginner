@@ -199,8 +199,9 @@ class TaskController extends Controller
             foreach($data_list as $k => $v){
                 if($k === 'priority'){
                     $awk[]=$datum->getPriorityString();
+                }else{
+                    $awk[]=$datum->$k;
                 }
-                $awk[]=$datum->$k;
             }
             //CSVの1行を出力
             $file->fputcsv($awk);
