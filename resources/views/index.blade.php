@@ -5,7 +5,7 @@
         <h1>ログイン</h1>
 
         @if(session('user.register_success') == true)
-            ユーザ登録しました！！
+            ユーザを登録しました！！
         @endif
         @if($errors->any())
             <div>

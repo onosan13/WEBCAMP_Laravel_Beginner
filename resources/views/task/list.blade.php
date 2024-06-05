@@ -6,7 +6,7 @@
 {{--メインコンテンツ--}}
 @section('contets')
         <h1>タスクの登録</h1>
-            @if (session('front.task_completed_succes') == true)
+            @if (session('front.task_register_success') == true)
                 タスクを登録しました！！<br>
             @endif
             @if(session('front.task_delete_success') == true)
