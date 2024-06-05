@@ -2,19 +2,19 @@
 
 {{-- メインコンテンツ --}}
 @section('contets')
-        <h1>ユーザー一覧</h1>
+        <h1>ユーザ一覧</h1>
         <table border="1">
             <tr>
-                <th>ユーザID</th>
-                <th>ユーザ名</th>
-                <th>タスク件数</th>
+                <th>ユーザID
+                <th>ユーザ名
+                <th>タスク件数
             </tr>
-            @foreach($users as $user)
-                <tr>
-                    <td>{{ $user->id }}
-                    <td>{{ $user->name }}
-                    <td>{{ $user->task_num }}
-                </tr>
-            @endforeach
+        @foreach($users as $user)
+            <tr>
+                <td>{{ $user->id }}
+                <td>{{ $user->name }}
+                <td>{{ $user->task_num }}
+            </tr>
+        @endforeach
         </table>
 @endsection
